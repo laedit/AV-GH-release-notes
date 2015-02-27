@@ -1,53 +1,17 @@
 configuration: Release
 
-init:
-  - git config --global core.autocrlf true
+#init:
+#  - git config --global core.autocrlf true
   
-install:
-- GitVersion /output buildserver /UpdateAssemblyInfo true
-- choco install ilrepack -source https://api.nuget.org/v2/
-
-#cache:
-#- packages -> **\packages.config
-#- C:\ProgramData\chocolatey\bin\OpenCover.Console.exe -> appveyor.yml
-#- C:\ProgramData\chocolatey\bin\coveralls.net.exe -> appveyor.yml
-#- C:\ProgramData\chocolatey\bin\inspectcode.exe -> appveyor.yml
-#- C:\ProgramData\chocolatey\lib -> appveyor.yml
-
-environment:
-  COVERALLS_REPO_TOKEN:
-    secure: S45Gg5pKn0LcC70m7IjzcmPVcuqsdK+Uiq8kUorOfQDM1OM+7pjlcaD0eomEJrqz
-
-before_build:
-  - nuget restore
-
 build:
-  project: SemanticReleaseNotesParser.sln
+  project: AV-GH-release-notes.sln
   verbosity: minimal
 
-after_build:
-#- NVika buildserver "inspectcodereport.xml" --debug --includesource
-- ilrepack /internalize /parallel /wildcards /out:SemanticReleaseNotesParser.exe SemanticReleaseNotesParser/bin/Release/SemanticReleaseNotesParser.exe SemanticReleaseNotesParser/bin/Release/*.dll
-- SemanticReleaseNotesParser.exe -g Categories -t File --debug
-- SemanticReleaseNotesParser.exe -g Categories -t Environment -f Markdown --debug
-# zip for github package
-- 7z a SemanticReleaseNotesParser.%GitVersion_NuGetVersion%.zip %appveyor_build_folder%\SemanticReleaseNotesParser.exe
-- 7z a SemanticReleaseNotesParser.%GitVersion_NuGetVersion%.zip ReleaseNotes.html
-
 test: off
-
-artifacts:
-- path: ReleaseNotes.html
-
-- path: SemanticReleaseNotesParser.*.zip
-  name: SemanticReleaseNotesParser.zip
   
 deploy:
   - provider: GitHub
     auth_token:
       secure: WaNF2IUzat+PQQqquLoaN43QIpnUsrYgSOGN3P5Tpy+A+ANOWQqvWE0eFA+XwmmX
-    artifact: SemanticReleaseNotesParser.zip
-    description: $(SemanticReleaseNotes)
-    on:
-      appveyor_repo_tag: true
+    description: $(test_env_releasenotes)
 
