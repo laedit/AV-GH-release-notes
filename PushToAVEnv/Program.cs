@@ -13,9 +13,10 @@ namespace PushToAVEnv
         {
             var appVeyorApiUrl = Environment.GetEnvironmentVariable("APPVEYOR_API_URL");
 
+            Console.WriteLine("AppVeyorApiUrl: {0}", appVeyorApiUrl);
             using (var webClient = new WebClient())
             {
-                webClient.BaseAddress = "appVeyorApiUrl";
+                webClient.BaseAddress = appVeyorApiUrl;
                 webClient.UploadData("api/build/variables", "POST", Encoding.UTF8.GetBytes(data));
             }
 
