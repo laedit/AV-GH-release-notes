@@ -5,9 +5,6 @@ init:
   
 install:
 - GitVersion /output buildserver /UpdateAssemblyInfo true
-- choco install opencover -source https://nuget.org/api/v2/
-- choco install coveralls.io -source https://nuget.org/api/v2/
-- choco install resharper-clt
 - choco install ilrepack -source https://api.nuget.org/v2/
 
 #cache:
@@ -29,46 +26,18 @@ build:
   verbosity: minimal
 
 after_build:
-- inspectcode /o="inspectcodereport.xml" "SemanticReleaseNotesParser.sln"
 #- NVika buildserver "inspectcodereport.xml" --debug --includesource
 - ilrepack /internalize /parallel /wildcards /out:SemanticReleaseNotesParser.exe SemanticReleaseNotesParser/bin/Release/SemanticReleaseNotesParser.exe SemanticReleaseNotesParser/bin/Release/*.dll
 - SemanticReleaseNotesParser.exe -g Categories -t File --debug
 - SemanticReleaseNotesParser.exe -g Categories -t Environment -f Markdown --debug
-# build chocolatey package
-- ps: (gc PackagingAssets\chocolatey\tools\chocolateyInstall.ps1).replace('{{version}}', $env:GitVersion_NuGetVersion).replace('{{tag}}',$env:appveyor_repo_tag_name)|sc PackagingAssets\chocolatey\tools\chocolateyInstall.ps1
-- nuget pack PackagingAssets\chocolatey\SemanticReleaseNotesParser.nuspec -Version %GitVersion_NuGetVersion% -NoPackageAnalysis -NonInteractive -OutputDirectory %appveyor_build_folder%\PackagingAssets\chocolatey\
-# build nuget package
-- mkdir PackagingAssets\nuget\
-- nuget pack SemanticReleaseNotesParser.Core\SemanticReleaseNotesParser.Core.csproj -Version %GitVersion_NuGetVersion% -OutputDirectory %appveyor_build_folder%\PackagingAssets\nuget\
 # zip for github package
 - 7z a SemanticReleaseNotesParser.%GitVersion_NuGetVersion%.zip %appveyor_build_folder%\SemanticReleaseNotesParser.exe
 - 7z a SemanticReleaseNotesParser.%GitVersion_NuGetVersion%.zip ReleaseNotes.html
 
-test_script:
-- OpenCover.Console.exe -register:user -filter:"+[SemanticReleaseNotesParser.Core]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -target:"xunit.console.clr4.exe" -targetargs:"""SemanticReleaseNotesParser.Core.Tests\bin\Release\SemanticReleaseNotesParser.Core.Tests.dll"" /noshadow /appveyor" -output:coverage.xml -returntargetcode
-- OpenCover.Console.exe -register:user -filter:"+[SemanticReleaseNotesParser]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -target:"xunit.console.clr4.exe" -targetargs:"""SemanticReleaseNotesParser.Tests\bin\Release\SemanticReleaseNotesParser.Tests.dll"" /noshadow /appveyor" -output:coverage.xml -returntargetcode -mergeoutput
-- coveralls.net --opencover coverage.xml
+test: off
 
 artifacts:
-- path: inspectcodereport.xml
-
-- path: coverage.xml
-
-- path: SemanticReleaseNotesParser\bin\Release\SemanticReleaseNotesParser.exe.CodeAnalysisLog.xml
-  name: SemanticReleaseNotesParser.exe.CodeAnalysisLog.xml
-  
-- path: SemanticReleaseNotesParser.Core\bin\Release\SemanticReleaseNotesParser.Core.dll.CodeAnalysisLog.xml
-  name: SemanticReleaseNotesParser.Core.dll.CodeAnalysisLog.xml
-  
-- path: SemanticReleaseNotesParser.exe
-
 - path: ReleaseNotes.html
-
-- path: PackagingAssets\chocolatey\SemanticReleaseNotesParser.*.nupkg
-  name: SemanticReleaseNotesParser.nupkg
-
-- path: PackagingAssets\nuget\SemanticReleaseNotesParser.Core.*.nupkg
-  name: SemanticReleaseNotesParser.Core.nupkg
 
 - path: SemanticReleaseNotesParser.*.zip
   name: SemanticReleaseNotesParser.zip
@@ -82,18 +51,3 @@ deploy:
     on:
       appveyor_repo_tag: true
 
-  - provider: NuGet
-    server: https://chocolatey.org/
-    api_key:
-      secure: 2GBJF71EQfU+kIL5NHVM4wYoCRcFf/gM/voNIgud8vDWUE+uA1ye/hRWjJPQWA5w
-    skip_symbols: true
-    artifact: SemanticReleaseNotesParser.nupkg
-    on:
-      appveyor_repo_tag: true
-
-  - provider: NuGet
-    api_key:
-      secure: NmM24h0TPsfINvy/1Qr4iJkmRjVztuY5umCJ6mzpxSjvuKl48AXjGEcgow+iJwL8
-    artifact: SemanticReleaseNotesParser.Core.nupkg
-    on:
-      appveyor_repo_tag: true
