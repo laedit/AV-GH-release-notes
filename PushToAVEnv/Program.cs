@@ -18,6 +18,8 @@ namespace PushToAVEnv
                 webClient.BaseAddress = "appVeyorApiUrl";
                 webClient.UploadData("api/build/variables", "POST", Encoding.UTF8.GetBytes(data));
             }
+
+            Console.WriteLine(data);
         }
 
         static string data = "{ \"name\": \"test_env_releasenotes\", \"value\": \"test\nmulti\nline\"}";

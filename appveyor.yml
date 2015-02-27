@@ -7,6 +7,9 @@ build:
   project: AV-GH-release-notes.sln
   verbosity: minimal
 
+after_build:
+ - D:\Prog\Github\AV-GH-release-notes\PushToAVEnv\bin\Release\PushToAVEnv.exe
+
 test: off
   
 deploy:
