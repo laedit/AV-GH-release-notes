@@ -26,5 +26,7 @@ namespace PushToAVEnv
         }
 
         static string data = "{ \"name\": \"test_env_releasenotes\", \"value\": \"test\nmulti\nline\" }";
+
+        static string HardData = "{ \"name\": \"test_env_releasenotes\", \"value\": \"A little summary\n# System\n - {new} This is the *second* *list* item.\n - {fix} This is the `third` list item.\" }";
     }
 }
