@@ -17,12 +17,14 @@ namespace PushToAVEnv
             using (var webClient = new WebClient())
             {
                 webClient.BaseAddress = appVeyorApiUrl;
+                webClient.Headers["Accept"] = "application/json";
+                webClient.Headers["Content-type"] = "application/json";
                 webClient.UploadData("api/build/variables", "POST", Encoding.UTF8.GetBytes(data));
             }
 
             Console.WriteLine(data);
         }
 
-        static string data = "{ \"name\": \"test_env_releasenotes\", \"value\": \"test\nmulti\nline\"}";
+        static string data = "{ \"name\": \"test_env_releasenotes\", \"value\": \"test\nmulti\nline\" }";
     }
 }
