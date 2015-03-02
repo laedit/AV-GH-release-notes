@@ -4,7 +4,8 @@ configuration: Release
 #  - git config --global core.autocrlf true
   
 build:
-  project: AV-GH-release-notes.sln
+#  roject: AV-GH-release-notes.sln
+  project: SemanticReleaseNotesParser.sln
   verbosity: minimal
 
 after_build:
