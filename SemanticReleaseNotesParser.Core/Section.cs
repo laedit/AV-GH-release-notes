@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SemanticReleaseNotesParser.Core
 {
@@ -34,6 +35,20 @@ namespace SemanticReleaseNotesParser.Core
         public Section()
         {
             Items = new List<Item>();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder(Name);
+
+            sb.AppendLine(Summary);
+
+            foreach (var item in Items)
+            {
+                sb.AppendLine("- " + item);
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -61,7 +61,11 @@ namespace SemanticReleaseNotesParser
                 }
 
                 // Parsing
+                Logger.Debug("Parsing release notes '{0}'", arguments.ReleaseNotesPath);
+
                 var releaseNotes = Core.SemanticReleaseNotesParser.Parse(FileSystem.File.OpenText(arguments.ReleaseNotesPath));
+
+                Logger.Debug("Parsed release notes: {0}", releaseNotes);
 
                 // Formatting
                 string template = null;
