@@ -13,10 +13,15 @@ build:
 
 after_build:
  #- PushToAVEnv\bin\Release\PushToAVEnv.exe
+  - SemanticReleaseNotesParser\bin\Release\SemanticReleaseNotesParser.exe --debug
   - SemanticReleaseNotesParser\bin\Release\SemanticReleaseNotesParser.exe -t=environment -f=markdown --debug
 
 test: off
-  
+
+artifacts:
+  - path: ReleaseNotes.md
+  - path: ReleaseNotes.html
+
 deploy:
   - provider: GitHub
     auth_token:

@@ -79,6 +79,8 @@ namespace SemanticReleaseNotesParser
                 var formatterSettings = new SemanticReleaseNotesFormatterSettings { OutputFormat = arguments.OutputFormat, LiquidTemplate = template, GroupBy = arguments.GroupBy };
                 string formattedReleaseNotes = SemanticReleaseNotesFormatter.Format(releaseNotes, formatterSettings);
 
+                Logger.Debug("Formatted release notes: {0}", formattedReleaseNotes);
+
                 // Select output
                 if (arguments.OutputType.HasFlag(OutputType.File))
                 {
@@ -126,11 +128,11 @@ namespace SemanticReleaseNotesParser
 
         private static IBuildServer GetApplicableBuildServer()
         {
-            return new List<IBuildServer>
-            {
-                new AppVeyor(Environment, WebClientFactory),
-                new LocalBuildServer(Environment)
-            }.First(bs => bs.CanApplyToCurrentContext());
+            return //new List<IBuildServer>
+            //{
+                new AppVeyor(Environment, WebClientFactory);//,
+                //new LocalBuildServer(Environment)
+//            }.First(bs => bs.CanApplyToCurrentContext());
         }
     }
 }
