@@ -8,7 +8,8 @@ build:
   verbosity: minimal
 
 after_build:
- - PushToAVEnv\bin\Release\PushToAVEnv.exe
+ #- PushToAVEnv\bin\Release\PushToAVEnv.exe
+  - SemanticReleaseNotesParser\bin\Release\SemanticReleaseNotesParser.exe -t=environment -f=markdown --debug
 
 test: off
   

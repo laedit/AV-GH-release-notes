@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22609.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticReleaseNotesParser", "SemanticReleaseNotesParser\SemanticReleaseNotesParser.csproj", "{D095BE8A-58BE-4722-AD79-151191C1243D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SemanticReleaseNotesParser.Core", "SemanticReleaseNotesParser.Core\SemanticReleaseNotesParser.Core.csproj", "{982453C5-147D-435E-B70A-E25E6C2EE748}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E70C1C84-0FF5-4551-A500-4FDD56AA4E8D}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D095BE8A-58BE-4722-AD79-151191C1243D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D095BE8A-58BE-4722-AD79-151191C1243D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D095BE8A-58BE-4722-AD79-151191C1243D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D095BE8A-58BE-4722-AD79-151191C1243D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982453C5-147D-435E-B70A-E25E6C2EE748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982453C5-147D-435E-B70A-E25E6C2EE748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982453C5-147D-435E-B70A-E25E6C2EE748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982453C5-147D-435E-B70A-E25E6C2EE748}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
