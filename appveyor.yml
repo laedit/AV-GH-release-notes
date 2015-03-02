@@ -21,5 +21,6 @@ deploy:
   - provider: GitHub
     auth_token:
       secure: WaNF2IUzat+PQQqquLoaN43QIpnUsrYgSOGN3P5Tpy+A+ANOWQqvWE0eFA+XwmmX
-    description: $(test_env_releasenotes)
+#    description: $(test_env_releasenotes)
+    description: $(SemanticReleaseNotes)
 
