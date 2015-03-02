@@ -3,6 +3,9 @@ configuration: Release
 #init:
 #  - git config --global core.autocrlf true
   
+before_build:
+ - nuget restore
+  
 build:
 #  roject: AV-GH-release-notes.sln
   project: SemanticReleaseNotesParser.sln
